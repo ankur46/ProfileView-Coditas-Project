@@ -1,0 +1,8 @@
+<h1 *ngIf="profile$">{{profile$.total_count}}</h1>
+<ng-container *ngIf="profile$">
+  <div *ngFor="let item of profile$.items"> 
+    <span>
+      {{item.id}}  || {{item.login}} || {{item.avatar_url}} || {{item.repos_url}}
+    </span>
+    </div>
+</ng-container>
