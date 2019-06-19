@@ -10,6 +10,7 @@ import { Component, OnInit, Output, EventEmitter } from '@angular/core';
 })
 export class ProfileSearchComponent implements OnInit {
 @Output() searchData =new EventEmitter();
+@Output() sort =new EventEmitter();
 public searchValue:string;
   constructor() { }
 
@@ -19,6 +20,13 @@ public searchValue:string;
     console.log("VALUE "+this.searchValue);
     this.searchData.emit({
       value:this.searchValue
+    })
+  }
+
+  Sort(sortBy:string,sortIn:string){
+    this.sort.emit({
+      sortBy:sortBy,
+      sortIn:sortIn
     })
   }
 }

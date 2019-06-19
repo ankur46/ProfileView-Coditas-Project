@@ -11,4 +11,5 @@ export interface items{
     repos_url?:string;
     html_url?:string;
     url?:string;
+    score?:string;
 }

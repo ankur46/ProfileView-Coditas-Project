@@ -13,12 +13,17 @@ import { Component, OnInit, Input, Output,EventEmitter } from '@angular/core';
 export class ProfileViewComponent implements OnInit {
 @Input() profile:Profile;
 @Input() profileRepo:ProfileRepo;
+@Input() sortedNameArray:any[];
+@Input() sortedRankArray:any[];
+@Input() sort:boolean;
+@Input() sortBy:boolean;
 @Output() searchRepo =new EventEmitter();
 public showRepo:boolean=false;
 
-  constructor() { }
+  constructor() {}
 
   ngOnInit() {
+    this.sort=false;
   }
   onRepoSearch(repoUrl){
     this.searchRepo.emit({

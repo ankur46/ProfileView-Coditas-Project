@@ -7,11 +7,12 @@ import 'rxjs/add/operator/map';
 
 @Injectable()
 export class ProfileService {
-private SearchUrl= 'https://api.github.com/search/users'
+private SearchUrl= 'https://api.github.com/search/users';
+private perPageCount:number=50;
   constructor(private http: HttpClient) { }
 
   getProfiles(searchString :string) : Observable<Profile>{
-    return this.http.get(`${this.SearchUrl}?q=${searchString}`)
+    return this.http.get(`${this.SearchUrl}?q=${searchString}&per_page=${this.perPageCount}`)
     .map((result: Profile) =>{
       return result;
     })

@@ -1,6 +1,6 @@
  <h1 *ngIf="profile">{{profile.total_count}}</h1>
-<ng-container *ngIf="profile">
-  <div *ngFor="let item of profile.items; let i "> 
+<ng-container *ngIf="profile && !sort">
+  <div *ngFor="let item of profile.items"> 
     <span>
       {{item.id}}  || {{item.login}} || {{item.name}} || {{item.repos_url}}
     </span>
@@ -16,6 +16,28 @@
       </span>
     </div>
    </ng-container>
-    </div>
-   
+</div>   
 </ng-container>
+<ng-container *ngIf="profile && sort">
+    <ng-container *ngFor="let data of sortby?sortedNameArray:sortedRankArray">
+       <ng-container *ngFor="let item of profile.items">
+         <div *ngIf="data == item.name || data == item.rank">
+           <span>
+             {{item.id}}  || {{item.login}} || {{item.name}} || {{item.repos_url}}
+           </span>
+           <button class="btn btn-outline-secondary" 
+           type="button" id="button-addon2"
+           (click)="onRepoSearch(item.repos_url)">
+           Button
+          </button>
+          <ng-container>
+           <div *ngFor="let repo of profileRepo">
+             <span>
+               {{repo.name}} || {{repo.language}} || {{repo.created_at}}
+             </span>
+           </div>
+          </ng-container>
+         </div>
+       </ng-container>
+    </ng-container>   
+   </ng-container>

@@ -1,6 +1,7 @@
 <div>
   <profile-search
   (searchData) ="onSearch($event)"
+  (sort)="Sort($event)"
   ></profile-search>
 </div>
 <div>
@@ -8,6 +9,8 @@
   [profile]="profile$"
   (searchRepo)="onRepoSearch($event)"
   [profileRepo]="profileRepo$"
+  [sortedNameArray]="sortedNameArray"
+  [sortedRankArray]="sortedRankArray"
   ></profile-view>
 </div>
 
