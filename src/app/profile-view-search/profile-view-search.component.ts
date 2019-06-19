@@ -13,16 +13,27 @@ export class ProfileViewSearchComponent implements OnInit {
   public profileRepo$: ProfileRepo;
   public sortedNameArray: any[] = [];
   public sortedRankArray: any[] = [];
-  public sortBy: string;
-  public sortIn: string;
+  public PaginatedArray: any[];
+  public sortArray: any[]=[];
+  public _sorttoggle:boolean;
+  public _total:number=99;
+  public _start:number=1;
+  public _end:number=3;
+  public _showNext:boolean;
+  public _showPrevious:boolean;
+  public _currentPage:number=1;
   constructor(private profileService: ProfileService) { }
 
-  ngOnInit() {}
+  ngOnInit() {
+  }
   onSearch(event) {
+    this.reassignValues();
+    this._sorttoggle=false;
     this.profileService.getProfiles(event['value'])
       .subscribe(data => {
         this.profile$ = data;
         this.getProfileName();
+        this.updatePaging();
       })
   }
 
@@ -43,22 +54,73 @@ export class ProfileViewSearchComponent implements OnInit {
   }
 
   Sort(sort) {
-    this.sortBy = sort['sortBy'];
-    this.sortIn = sort['sortIn'];
-    console.log("sort " + sort['sortBy'] + " " + sort['sortIn']);
-    if (this.sortBy == 'name' && this.profile$) {
+    this.reassignValues();
+    this._sorttoggle=true;
+    this.sortArray=[];
+    if (sort['sortBy'] == 'name' && this.profile$) {
       for (let item of this.profile$.items) {
         this.sortedNameArray.push(item.name);
       }
-      this.sortedNameArray = this.sortedNameArray.sort();
+      if(sort['sortIn'] == 'asc'){
+        this.sortArray = this.sortedNameArray.sort();
+      }
+      else{
+        this.sortArray = this.sortedNameArray.sort().reverse();
+      }
     }
-    if (this.sortBy == 'rank' && this.profile$) {
+    if (sort['sortBy'] == 'score' && this.profile$) {
       for (let item of this.profile$.items) {
         this.sortedRankArray.push(item.score);
       }
-      console.log("BEFORE " + this.sortedRankArray);
-      this.sortedRankArray = this.sortedRankArray.sort();
-      console.log("After " + this.sortedRankArray);
+      if(sort['sortIn'] == 'asc'){
+        this.sortArray = this.sortedRankArray.sort();
+      }
+      else{
+        this.sortArray = this.sortedRankArray.sort().reverse();
+      }
     }
+    this.updatePaging();
   }
+
+ updatePaging(data?){
+  if( data && data['val'] == true){
+    this._currentPage= this._currentPage+1;
+  }
+  if( data && data['val'] == false){
+   this._currentPage= this._currentPage-1;
+  }
+  if(this._currentPage == 1){
+    this._showPrevious=false;
+  }
+  if(data && this._currentPage != 1){
+    this._showPrevious=true;
+  }
+  this._start=((this._currentPage -1) * 3)+1;
+  if(this._currentPage * 3 <= this._total){
+    this._end = this._currentPage * 3;
+  }
+  else{
+    this._end = this._total - this._end;
+  }
+  if(this._end == this._total){
+    this._showNext= false;
+  }
+  if(this._end != this._total){
+    this._showNext=true;
+  }
+  if(this._sorttoggle == false){
+    this.PaginatedArray=this.profile$.items.slice((this._start-1) , this._end);
+  }
+  if(this._sorttoggle == true){
+    this.sortArray=this.sortArray.slice((this._start-1) , this._end);
+  }
+ 
+ }
+ reassignValues(){
+   this._showPrevious=false;
+   this._showNext=true;
+   this._end=3;
+   this._start=1;
+   this._currentPage=1;
+ }
 }

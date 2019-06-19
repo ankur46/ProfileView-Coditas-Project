@@ -8,9 +8,15 @@
   <profile-view
   [profile]="profile$"
   (searchRepo)="onRepoSearch($event)"
+  (pagingKey)="updatePaging($event)"
   [profileRepo]="profileRepo$"
-  [sortedNameArray]="sortedNameArray"
-  [sortedRankArray]="sortedRankArray"
+  [sortArray]="sortArray"
+  [PaginatedArray]="PaginatedArray"
+  [sorttoggle]="_sorttoggle"
+  [start]="_start"
+  [end]="_end"
+  [showNext]="_showNext"
+  [showPrevious]="_showPrevious"
   ></profile-view>
 </div>
 
