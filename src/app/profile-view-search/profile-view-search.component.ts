@@ -14,6 +14,7 @@ export class ProfileViewSearchComponent implements OnInit {
   public sortedNameArray: any[] = [];
   public sortedRankArray: any[] = [];
   public PaginatedArray: any[];
+  public PaginatedsortArray: any[];
   public sortArray: any[]=[];
   public _sorttoggle:boolean;
   public _total:number=99;
@@ -22,12 +23,14 @@ export class ProfileViewSearchComponent implements OnInit {
   public _showNext:boolean;
   public _showPrevious:boolean;
   public _currentPage:number=1;
+  public repoDetails:boolean;
   constructor(private profileService: ProfileService) { }
 
   ngOnInit() {
   }
   onSearch(event) {
     this.reassignValues();
+    this.PaginatedArray=[];
     this._sorttoggle=false;
     this.profileService.getProfiles(event['value'])
       .subscribe(data => {
@@ -50,12 +53,14 @@ export class ProfileViewSearchComponent implements OnInit {
     this.profileService.getProfileRepo(repoUrl['value'])
       .subscribe(data => {
         this.profileRepo$ = data;
+        this.repoDetails=true;
       })
   }
 
   Sort(sort) {
     this.reassignValues();
     this._sorttoggle=true;
+    this.PaginatedsortArray=[];
     this.sortArray=[];
     if (sort['sortBy'] == 'name' && this.profile$) {
       for (let item of this.profile$.items) {
@@ -112,7 +117,7 @@ export class ProfileViewSearchComponent implements OnInit {
     this.PaginatedArray=this.profile$.items.slice((this._start-1) , this._end);
   }
   if(this._sorttoggle == true){
-    this.sortArray=this.sortArray.slice((this._start-1) , this._end);
+    this.PaginatedsortArray=this.sortArray.slice((this._start-1) , this._end);
   }
  
  }

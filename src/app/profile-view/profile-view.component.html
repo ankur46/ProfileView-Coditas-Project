@@ -1,58 +1,105 @@
- <h1 *ngIf="profile">{{profile.total_count}}</h1>
-<ng-container *ngIf="profile && !sorttoggle">
-  <div *ngFor="let item of PaginatedArray; let i =index"> 
-    <div *ngIf="i <= 3">
-      <span>
-        {{item.id}}  || {{item.login}} || {{item.name}} || {{item.repos_url}}
-      </span>
-      <button class="btn btn-outline-secondary" 
-      type="button" id="button-addon2"
-      (click)="onRepoSearch(item.repos_url)">
-      Button
-     </button>
-     <ng-container>
-      <div *ngFor="let repo of profileRepo">
-        <span>
-          {{repo.name}} || {{repo.language}} || {{repo.created_at}}
-        </span>
+
+<div class="divAlign" *ngIf="profile">
+    <h6>Total Results: {{profile.total_count}}</h6>
+  <ng-container *ngIf="!sorttoggle">
+    <div *ngFor="let item of PaginatedArray; let i =index"> 
+      <div *ngIf="i <= 3">
+          <div class="card cardWidth">
+              <div class="card-body">
+                  <div class="container">
+                      <div class="row">
+                        <div class="col-3">
+                            <img [src]="item.avatar_url" 
+                            alt="Avatar" 
+                            style="width:200px">
+                        </div>
+                        <div class="col colPadding">
+                          <h2 class="card-title">{{item.name}}</h2>
+                          <p class="card-text cardTextMargin">Profile URL: {{item.html_url}}</p>
+                          <p class="card-text cardTextMargin">Score: {{item.score}}</p>
+                          <button  
+                          class="btn btn-outline-primary placeButton"
+                          (click)="onRepoSearch(item.repos_url)">
+                          Details
+                        </button>
+                        </div>
+                      </div>
+                    </div>
+              </div>
+              <div class="card-footer text-muted" *ngIf="repoDetails">
+                  <table class="table">
+                      <tbody>
+                        <tr *ngFor="let repo of profileRepo; let j=index">
+                          <ng-container *ngIf="j<3">
+                              <td>{{repo.name}}</td>
+                              <td></td>
+                              <td>{{repo.language}}</td>
+                          </ng-container>                        
+                        </tr>
+                      </tbody>
+                  </table>
+                </div>
+            </div>
+            <br>
       </div>
-     </ng-container>
-    </div>   
-</div>   
-</ng-container>
-<ng-container *ngIf="profile && sorttoggle">
-    <ng-container *ngFor="let data of sortArray; let i=index">
-       <ng-container *ngFor="let item of profile.items">
-         <div *ngIf="(data == item.name || data == item.score) && i<3">
-           <span>
-             {{item.score}}  || {{item.login}} || {{item.name}} || {{item.repos_url}}
-           </span>
-           <button class="btn btn-outline-secondary" 
-           type="button" id="button-addon2"
-           (click)="onRepoSearch(item.repos_url)">
-           Button
-          </button>
-          <ng-container>
-           <div *ngFor="let repo of profileRepo">
-             <span>
-               {{repo.name}} || {{repo.language}} || {{repo.created_at}}
-             </span>
-           </div>
-          </ng-container>
-         </div>
-       </ng-container>
-    </ng-container>   
-   </ng-container>
-   <button class="btn btn-outline-secondary" 
-      type="button"
-      [disabled]="!showPrevious"
-      (click)="updatePaging(false)">
-      Previous
-  </button>
-  <span> {{start}} - {{end}} of {{_total}}</span>
-  <button class="btn btn-outline-secondary" 
-    type="button"
-    [disabled]="!showNext"
-    (click)="updatePaging(true)">
-    Next
- </button>
+    </div>
+  </ng-container>
+  <ng-container *ngIf="sorttoggle">
+      <ng-container *ngFor="let data of PaginatedsortArray; let i=index">
+        <ng-container *ngFor="let item of profile.items">
+          <div *ngIf="(data == item.name || data == item.score) && i<3">
+              <div class="card cardWidth">
+                  <div class="card-body">
+                      <div class="container">
+                          <div class="row">
+                            <div class="col-3">
+                                <img [src]="item.avatar_url" 
+                                alt="Avatar" 
+                                style="width:200px">
+                            </div>
+                            <div class="col colPadding">
+                              <h2 class="card-title">{{item.name}}</h2>
+                              <p class="card-text cardTextMargin">Profile URL: {{item.html_url}}</p>
+                              <p class="card-text cardTextMargin">Score: {{item.score}}</p>
+                              <button  
+                              class="btn btn-outline-primary placeButton"
+                              (click)="onRepoSearch(item.repos_url)">
+                              Details
+                            </button>
+                            </div>
+                          </div>
+                        </div>
+                  </div>
+                  <div class="card-footer text-muted" *ngIf="_details">
+                      <table class="table">
+                          <tbody>
+                            <tr *ngFor="let repo of profileRepo; let j=index">
+                              <ng-container *ngIf="j<3">
+                                  <td>{{repo.name}}</td>
+                                  <td></td>
+                                  <td>{{repo.language}}</td>
+                              </ng-container>                        
+                            </tr>
+                          </tbody>
+                      </table>
+                    </div>
+                </div>
+                <br>
+          </div>
+        </ng-container>
+      </ng-container>
+  </ng-container>
+  <br>
+    <div class="paginationAlign">
+            <nav aria-label="Page navigation example">
+                <ul class="pagination">
+                  <li class="page-item"><button class="page-link" [disabled]="!showPrevious" (click)="updatePaging(false)">Previous</button></li>
+                  <li class="page-item"><a class="page-link" >{{start}}</a></li>
+                  <li class="page-item"><a class="page-link" >-</a></li>
+                  <li class="page-item"><a class="page-link" >{{end}}</a></li>
+                  <li class="page-item"><button class="page-link" [disabled]="!showNext" (click)="updatePaging(true)">Next</button></li>
+                </ul>
+              </nav>
+    </div>      
+</div>
+

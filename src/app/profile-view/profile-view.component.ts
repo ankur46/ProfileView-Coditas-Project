@@ -13,6 +13,7 @@ import { Component, OnInit, Input, Output,EventEmitter } from '@angular/core';
 export class ProfileViewComponent implements OnInit {
 @Input() profile:Profile;
 @Input() PaginatedArray:items[];
+@Input() PaginatedsortArray:any[];
 @Input() profileRepo:ProfileRepo;
 @Input() sortArray:any[];
 @Input() sorttoggle:boolean;
@@ -20,10 +21,11 @@ export class ProfileViewComponent implements OnInit {
 @Input() end:number;
 @Input() showNext:boolean;
 @Input() showPrevious:boolean;
+@Input() repoDetails:boolean;
 @Output() searchRepo =new EventEmitter();
 @Output() pagingKey =new EventEmitter();
-public showRepo:boolean=false;
 public _total:number=99;
+public detailButton:string='Details'
 
 
 
@@ -36,9 +38,6 @@ public _total:number=99;
     this.searchRepo.emit({
      value:repoUrl
     })
-    if(this.profileRepo){
-      this.showRepo=true;
-    }
   }
   updatePaging(val){
    this.pagingKey.emit({

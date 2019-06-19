@@ -1,0 +1,22 @@
+img {
+    border-radius: 50%;
+  }
+.placeButton{
+    float: right;
+    width: 25%;
+}
+.cardWidth{
+    width: 69%;
+}
+.colPadding{
+    padding: 3%;
+}
+.cardTextMargin{
+    margin-left: 1%;
+}
+.divAlign{
+    padding: 3%;
+}
+.paginationAlign{
+    margin-left: 48%;
+}
