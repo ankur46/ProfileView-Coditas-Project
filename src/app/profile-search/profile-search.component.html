@@ -1,8 +1,42 @@
-<h1 *ngIf="profile$">{{profile$.total_count}}</h1>
-<ng-container *ngIf="profile$">
-  <div *ngFor="let item of profile$.items"> 
-    <span>
-      {{item.id}}  || {{item.login}} || {{item.avatar_url}} || {{item.repos_url}}
-    </span>
+
+<!-- <div class="input-group mb-3">
+  <input type="text" class="form-control"
+   [(ngModel)]="searchValue"
+   >
+  <div class="input-group-append">
+    <button class="btn btn-outline-secondary" 
+     type="button" id="button-addon2"
+     (click)="onSearch()">
+     Button
+    </button>
+  </div>
+</div> -->
+<nav class="navbar navbar-light bg-light">
+  <div ngbDropdown  class="nav-item dropdown dropdown-modify">
+    <a ngbDropdownToggle class="nav-link dropdown-toggle" 
+    id="dropdown01" 
+    data-toggle="dropdown" 
+    aria-haspopup="true" 
+    aria-expanded="false">
+     Sort By
+    </a>
+    <div ngbDropdownMenu class="dropdown-menu" aria-labelledby="dropdown01">
+      <a class="dropdown-item" (click)="sortByName()">BY Name</a>
+      <a class="dropdown-item" (click)="sortByRank()">By Rank</a>
     </div>
-</ng-container>
+  </div>
+  
+  <div class="form-inline">
+    <input
+     class="form-control mr-sm-2" 
+     type="text"
+     [(ngModel)]="searchValue"
+    >
+    <button 
+     class="btn btn-outline-success my-2 my-sm-0"
+     type="button"
+     (click)="onSearch()">
+     Search
+    </button>
+  </div>
+</nav>

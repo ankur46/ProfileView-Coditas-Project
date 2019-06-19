@@ -1,7 +1,7 @@
-import { profileRepo } from './../profile-model/ProfileRepo';
+
 import { Profile, items } from './../profile-model/Profile';
 import { ProfileService } from './../profile-service/profile.service';
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Output, EventEmitter } from '@angular/core';
 
 @Component({
   selector: 'profile-search',
@@ -9,14 +9,16 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./profile-search.component.css']
 })
 export class ProfileSearchComponent implements OnInit {
-public profile$:Profile;
-  constructor(private profileService : ProfileService) { }
+@Output() searchData =new EventEmitter();
+public searchValue:string;
+  constructor() { }
 
-  ngOnInit() {
-    this.profileService.getProfiles('varun')
-    .subscribe(data =>{
-      this.profile$=data;
+  ngOnInit() {}
+
+  onSearch(){
+    console.log("VALUE "+this.searchValue);
+    this.searchData.emit({
+      value:this.searchValue
     })
   }
-
 }

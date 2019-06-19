@@ -1,4 +1,4 @@
-import { profileRepo } from './../profile-model/ProfileRepo';
+import { ProfileRepo } from './../profile-model/ProfileRepo';
 import { Profile } from './../profile-model/Profile';
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
@@ -16,10 +16,10 @@ private SearchUrl= 'https://api.github.com/search/users'
       return result;
     })
   }
-  
-  getProfileRepo(repoUrl : string) : Observable<profileRepo>{
+
+  getProfileRepo(repoUrl : string) : Observable<ProfileRepo>{
    return this.http.get(repoUrl)
-   .map((result:profileRepo) =>{
+   .map((result:ProfileRepo) =>{
          return result;
    })
   }

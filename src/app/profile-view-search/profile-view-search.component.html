@@ -1,1 +1,14 @@
+<div>
+  <profile-search
+  (searchData) ="onSearch($event)"
+  ></profile-search>
+</div>
+<div>
+  <profile-view
+  [profile]="profile$"
+  (searchRepo)="onRepoSearch($event)"
+  [profileRepo]="profileRepo$"
+  ></profile-view>
+</div>
+
 
