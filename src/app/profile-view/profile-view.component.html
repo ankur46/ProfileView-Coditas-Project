@@ -30,7 +30,7 @@
                            Collapse
                           </button>
                      </ng-container>
-                          <ng-container *ngIf="detailButtonHide && (repoVar!=item.repos_url)">
+                          <ng-container *ngIf="detailButtonHide || (repoVar!=item.repos_url)">
                             <button 
                               class="btn btn-outline-primary placeButton"
                               (click)="onDetails(item.repos_url)">
@@ -83,7 +83,7 @@
                                Collapse
                               </button>
                          </ng-container>
-                              <ng-container *ngIf="detailButtonHide && (repoVar!=item.repos_url)">
+                              <ng-container *ngIf="detailButtonHide || (repoVar!=item.repos_url)">
                                 <button 
                                   class="btn btn-outline-primary placeButton"
                                   (click)="onDetails(item.repos_url)">
