@@ -1,5 +1,11 @@
 
-<div class="divAlign" *ngIf="profile">
+<div class="divAlign" *ngIf="!profile && !error">
+  <h1>SEARCH GITHUB USER</h1>
+     <h1>AND SORT THEM </h1>
+     <h1>USING NAME AND RANK</h1>
+    
+</div>
+<div class="divAlign" *ngIf="profile && !error">
     <h6>Total Results: {{profile.total_count}}</h6>
   <ng-container *ngIf="!sorttoggle">
     <div *ngFor="let item of PaginatedArray; let i =index"> 
@@ -17,16 +23,25 @@
                           <h2 class="card-title">{{item.name}}</h2>
                           <p class="card-text cardTextMargin">Profile URL: {{item.html_url}}</p>
                           <p class="card-text cardTextMargin">Score: {{item.score}}</p>
-                          <button  
-                          class="btn btn-outline-primary placeButton"
-                          (click)="onRepoSearch(item.repos_url)">
-                          Details
-                        </button>
+                      <ng-container *ngIf="!detailButtonHide && (repoVar==item.repos_url)">
+                            <button  
+                            class="btn btn-outline-primary placeButton"
+                            (click)="onCollapse(item.repos_url)">
+                           Collapse
+                          </button>
+                     </ng-container>
+                          <ng-container *ngIf="detailButtonHide && (repoVar!=item.repos_url)">
+                            <button 
+                              class="btn btn-outline-primary placeButton"
+                              (click)="onDetails(item.repos_url)">
+                            Details
+                          </button>
+                       </ng-container>
                         </div>
                       </div>
                     </div>
               </div>
-              <div class="card-footer text-muted" *ngIf="repoDetails">
+              <div class="card-footer text-muted" *ngIf="repoDetails && (repoVar==item.repos_url)">
                   <table class="table">
                       <tbody>
                         <tr *ngFor="let repo of profileRepo; let j=index">
@@ -61,16 +76,25 @@
                               <h2 class="card-title">{{item.name}}</h2>
                               <p class="card-text cardTextMargin">Profile URL: {{item.html_url}}</p>
                               <p class="card-text cardTextMargin">Score: {{item.score}}</p>
-                              <button  
-                              class="btn btn-outline-primary placeButton"
-                              (click)="onRepoSearch(item.repos_url)">
-                              Details
-                            </button>
+                              <ng-container *ngIf="!detailButtonHide && (repoVar==item.repos_url)">
+                                <button  
+                                class="btn btn-outline-primary placeButton"
+                                (click)="onCollapse(item.repos_url)">
+                               Collapse
+                              </button>
+                         </ng-container>
+                              <ng-container *ngIf="detailButtonHide && (repoVar!=item.repos_url)">
+                                <button 
+                                  class="btn btn-outline-primary placeButton"
+                                  (click)="onDetails(item.repos_url)">
+                                Details
+                              </button>
+                           </ng-container>
                             </div>
                           </div>
                         </div>
                   </div>
-                  <div class="card-footer text-muted" *ngIf="_details">
+                  <div class="card-footer text-muted" *ngIf="repoDetails && (repoVar==item.repos_url)">
                       <table class="table">
                           <tbody>
                             <tr *ngFor="let repo of profileRepo; let j=index">
@@ -101,5 +125,8 @@
                 </ul>
               </nav>
     </div>      
+</div>
+<div class="divAlign" *ngIf=" error">
+ <h1>OOPS MAXIMUM HIT TO GITHUB API REACHED PLEASE USE OAUTH AUTHENTICATED REQUEST TO GET RESULT </h1>
 </div>
 

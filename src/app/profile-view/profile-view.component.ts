@@ -17,6 +17,7 @@ export class ProfileViewComponent implements OnInit {
 @Input() profileRepo:ProfileRepo;
 @Input() sortArray:any[];
 @Input() sorttoggle:boolean;
+@Input() error:boolean;
 @Input() start:number;
 @Input() end:number;
 @Input() showNext:boolean;
@@ -25,7 +26,9 @@ export class ProfileViewComponent implements OnInit {
 @Output() searchRepo =new EventEmitter();
 @Output() pagingKey =new EventEmitter();
 public _total:number=99;
-public detailButton:string='Details'
+public detailButtonHide:boolean=true;
+public 
+public repoVar:string;
 
 
 
@@ -34,10 +37,17 @@ public detailButton:string='Details'
   ngOnInit() {
     this.sorttoggle=false;
   }
-  onRepoSearch(repoUrl){
+  onDetails(repoUrl){
+    this.repoVar=repoUrl;
     this.searchRepo.emit({
      value:repoUrl
     })
+    this.detailButtonHide=false;
+  }
+
+  onCollapse(val){
+   this.detailButtonHide=true;
+   this.repoDetails=false;
   }
   updatePaging(val){
    this.pagingKey.emit({

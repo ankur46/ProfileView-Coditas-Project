@@ -24,6 +24,7 @@ export class ProfileViewSearchComponent implements OnInit {
   public _showPrevious:boolean;
   public _currentPage:number=1;
   public repoDetails:boolean;
+  public error:boolean=false;
   constructor(private profileService: ProfileService) { }
 
   ngOnInit() {
@@ -45,6 +46,9 @@ export class ProfileViewSearchComponent implements OnInit {
       this.profileService.getProfileName(item.url)
         .subscribe(data => {
           item.name = <string>data;
+        },
+        error=>{
+          this.error=true;
         })
     }
   }
@@ -54,6 +58,9 @@ export class ProfileViewSearchComponent implements OnInit {
       .subscribe(data => {
         this.profileRepo$ = data;
         this.repoDetails=true;
+      },
+      error=>{
+        this.error=true;
       })
   }
 

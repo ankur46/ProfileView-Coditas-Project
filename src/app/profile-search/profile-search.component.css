@@ -1,5 +1,7 @@
 .dropdown-modify{
     cursor: pointer;
+    border: 1px solid black;
+    width: 10%;
 }
 .navbarBG{
     background-color: aliceblue;
