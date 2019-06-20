@@ -46,6 +46,7 @@ export class ProfileViewSearchComponent implements OnInit {
       this.profileService.getProfileName(item.url)
         .subscribe(data => {
           item.name = <string>data;
+		   this.error=false;
         },
         error=>{
           this.error=true;
@@ -58,6 +59,7 @@ export class ProfileViewSearchComponent implements OnInit {
       .subscribe(data => {
         this.profileRepo$ = data;
         this.repoDetails=true;
+		 this.error=false;
       },
       error=>{
         this.error=true;
